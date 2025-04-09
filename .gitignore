@@ -1,0 +1,15 @@
+config*.yaml
+.env*
+
+# Build artifacts
+wtcode
+
+# Test artifacts
+test-report.json
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
