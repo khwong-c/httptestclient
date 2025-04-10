@@ -55,11 +55,11 @@ func TestLogin(t *testing.T) {
   handler := CreateMyServer()
 
   // Create a new test client
-  client := httptestclient.NewWithCookieJar(handler)
+  client, _ := httptestclient.NewWithCookieJar(handler)
 
   // Make a sequence of requests with the same client 
-  resp1, err := client.Get("http://localhost/login")
-  resp2, err := client.Get("http://localhost/session")
+  resp1, _ := client.Get("http://localhost/login")
+  resp2, _ := client.Get("http://localhost/session")
 
   // ...
 }
