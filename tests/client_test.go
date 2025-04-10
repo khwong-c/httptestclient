@@ -56,8 +56,8 @@ func createCookieHandler() http.Handler {
 
 type TestClientSuite struct {
 	suite.Suite
-	server           http.Handler
-	serverWithCookie http.Handler
+	handler           http.Handler
+	handlerWithCookie http.Handler
 }
 
 func TestClient(t *testing.T) {
@@ -65,12 +65,12 @@ func TestClient(t *testing.T) {
 }
 
 func (s *TestClientSuite) SetupTest() {
-	s.server = createHandler()
-	s.serverWithCookie = createCookieHandler()
+	s.handler = createHandler()
+	s.handlerWithCookie = createCookieHandler()
 }
 
 func (s *TestClientSuite) TestServeRequest() {
-	client := httptestclient.New(s.server)
+	client := httptestclient.New(s.handler)
 	for _, tc := range []struct {
 		name         string
 		endpoint     string
@@ -96,7 +96,7 @@ func (s *TestClientSuite) TestServeRequest() {
 }
 
 func (s *TestClientSuite) TestCookieJar() {
-	client, err := httptestclient.NewWithCookieJar(s.serverWithCookie)
+	client, err := httptestclient.NewWithCookieJar(s.handlerWithCookie)
 	s.Require().NoError(err)
 
 	// Make a request to set the cookie
@@ -125,7 +125,7 @@ func (s *TestClientSuite) TestCookieJar() {
 
 // The Cookie Jar feature will not work if the URL is not a full URL.
 func (s *TestClientSuite) TestCookieJar_FullURLIsRequired() {
-	client, err := httptestclient.NewWithCookieJar(s.serverWithCookie)
+	client, err := httptestclient.NewWithCookieJar(s.handlerWithCookie)
 	s.Require().NoError(err)
 
 	// Make a request to set the cookie
