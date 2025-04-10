@@ -39,8 +39,8 @@ func TestLogin(t *testing.T) {
     client := httptestclient.NewWithCookieJar(handler)
 
     // Make a sequence of requests with the same client
-    resp1, err := client.Get("http://localhost/set-cookie")
-	resp2, err := client.Get("http://localhost/get-cookie")
+    resp1, err := client.Get("http://localhost/login")
+	resp2, err := client.Get("http://localhost/session")
 	// ...
 }
 ```
