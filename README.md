@@ -15,34 +15,55 @@ This provides benefits such as:
 
 ### Standard Usage
 Most test cases can use the client returned by `httptestclient.New()`.
-```golang
-func TestMyHandler(t *testing.T) {
-    handler := CreateMyServer()  // e.g. http/chi/gorilla Mux
-	
-	// Create a new test client
-    client := httptestclient.New(handler)
 
-    // Make a request as usual
-    resp, err := client.Get("http://localhost/my-handler")
-	
-	// ...
+```golang
+package test
+
+import (
+  "testing"
+
+  "github.com/khwong-c/httptestclient"
+)
+
+func TestMyHandler(t *testing.T) {
+  handler := CreateMyServer() // e.g. http/chi/gorilla Mux
+
+  // Create a new test client
+  client := httptestclient.New(handler)
+
+  // Make a request as usual
+  resp, err := client.Get("http://localhost/my-handler")
+
+  // ...
 }
+
 ```
 
 ### Memorizing Cookies
 Calling `httptestclient.NewWithCookieJar()` will create a client with cookie jar.
-```golang
-func TestLogin(t *testing.T) {
-    handler := CreateMyServer()
-	
-	// Create a new test client
-    client := httptestclient.NewWithCookieJar(handler)
 
-    // Make a sequence of requests with the same client
-    resp1, err := client.Get("http://localhost/login")
-	resp2, err := client.Get("http://localhost/session")
-	// ...
+```golang
+package test
+
+import (
+  "testing"
+
+  "github.com/khwong-c/httptestclient"
+)
+
+func TestLogin(t *testing.T) {
+  handler := CreateMyServer()
+
+  // Create a new test client
+  client := httptestclient.NewWithCookieJar(handler)
+
+  // Make a sequence of requests with the same client 
+  resp1, err := client.Get("http://localhost/login")
+  resp2, err := client.Get("http://localhost/session")
+
+  // ...
 }
+
 ```
 
 ### Known Issues
